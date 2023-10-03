@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/inflect
+inflect.so
+inflect.dylib
+inflect.dll
+inflect.a
+inflect.lib
+inflect-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst

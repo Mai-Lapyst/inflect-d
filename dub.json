@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"mai-lapyst"
+	],
+	"copyright": "Copyright © 2023, mai-lapyst",
+	"description": "A inflection library in D",
+	"license": "AGPL-3.0-or-later",
+	"name": "inflect"
+}
