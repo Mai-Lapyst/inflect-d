@@ -76,10 +76,12 @@ if (isSomeString!S)
     return InflectionRegistry.instance().get(locale).pluralize(_inp, count);
 }
 
-S pluralize(S)(S inp, string locale, int count = 2)
+string pluralize(S)(S inp, string locale, int count = 2)
 if (isSomeString!S)
 {
-    InflectionRegistry.get(locale).pluralize(inp, count);
+    import std.conv : to;
+    string _inp = to!string(inp);
+    return InflectionRegistry.get(locale).pluralize(_inp, count);
 }
 
 unittest {
