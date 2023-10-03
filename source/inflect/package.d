@@ -5,16 +5,25 @@ import std.regex : Regex;
 
 import inflect.en;
 
+/**
+ * Interface to be implemented by backends
+ */
 interface Inflections {
     string pluralize(string inp, int count) shared const;
 }
 
+/**
+ * Execption to be throwed when a requested backend could not be found.
+ */
 class NoSuchInflectionsException : Exception {
     this(string locale) {
         super("Could not find inflections for '" ~ locale ~ "'");
     }
 }
 
+/**
+ * Registry for inflection backends
+ */
 class InflectionRegistry {
     private shared(Inflections) delegate()[string] constructors;
     private shared(Inflections)[string] cache;
@@ -59,6 +68,9 @@ class InflectionRegistry {
     }
 }
 
+/**
+ * Helper-template to register an inflection backend
+ */
 template RegisterInflections(string locale, alias InflectionsClass) {
     import std.traits;
     pragma(msg, "Registering inflection for locale '" ~ locale ~ "' with type ", fullyQualifiedName!InflectionsClass);
@@ -68,6 +80,14 @@ template RegisterInflections(string locale, alias InflectionsClass) {
     }
 }
 
+/**
+ * Pluralize a string
+ * 
+ * Params:
+ *  inp = the input string
+ *  count = some languages vary their pluralization based on the count; specify it here!
+ *  locale = the locale to use
+ */
 string pluralize(S)(S inp, int count = 2, string locale = "en")
 if (isSomeString!S)
 {
@@ -76,6 +96,7 @@ if (isSomeString!S)
     return InflectionRegistry.instance().get(locale).pluralize(_inp, count);
 }
 
+/// ditto
 string pluralize(S)(S inp, string locale, int count = 2)
 if (isSomeString!S)
 {
